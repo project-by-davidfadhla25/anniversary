@@ -1,9 +1,9 @@
-<!DOCTYPE html
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kartu Ucapan Romantis</title>
+  <title>Kartu Ucapan </title>
   <style>
     body {
       margin: 0;
@@ -75,14 +75,31 @@
       color: #ff69b4;
       margin: 20px 0;
     }
+
+    #musicControl {
+      margin-top: 20px;
+      background-color: #ffb6c1;
+      padding: 8px 15px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #musicControl button {
+      margin: 0;
+      padding: 5px 10px;
+      font-size: 14px;
+      background-color: #ff69b4;
+    }
   </style>
 </head>
 <body>
   <!-- Login Page -->
   <div id="loginPage">
-    <h1>💖 Untuk Pacar Aku Tersayang 💖</h1>
+    <h1>💖 Kartu Ucapan  💖</h1>
     <p>Masukkan Namamu:</p>
-    <input type="text" id="nameInput" placeholder="Contoh: fadhla" />
+    <input type="text" id="nameInput" placeholder="Contoh: orang" />
     <br />
     <button onclick="showGreeting()">Buka Ucapan</button>
   </div>
@@ -93,8 +110,8 @@
     <h1>Untuk <span id="nameDisplay"></span>,</h1>
     
     <div class="message">
-      happy anniversary sayang .<br>
-      makasih buat waktunya selama ini semoga kita selalu baik baik saja💕
+      Makasih Udah buka.<br>
+      Ak cmn mau bilang ak seneng bisa kenal kamu semoga kita selalu baik baik aja ya💕
     </div>
     
     <div class="present">💌</div>
@@ -112,9 +129,24 @@
       <h3 style="color: #ff69b4; margin-top: 0;">💞 Hari Pertemuan (6 Maret 2024)</h3>
       <div id="daysTogether2"></div>
     </div>
+
+    <!-- Music Control -->
+    <div id="musicControl">
+      <span>🎵 Musik Latar</span>
+      <button onclick="toggleMusic()" id="musicToggle">Matikan</button>
+    </div>
   </div>
 
+  <!-- Audio Element (hidden) -->
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung elemen audio.
+  </audio>
+
   <script>
+    const bgMusic = document.getElementById("bgMusic");
+    let isMusicPlaying = true;
+
     function showGreeting() {
       const name = document.getElementById("nameInput").value;
       if (name.trim() === "") {
@@ -132,6 +164,9 @@
       
       // Calculate anniversary days
       calculateAnniversaryDays();
+
+      // Play background music
+      bgMusic.play().catch(e => console.log("Autoplay prevented:", e));
     }
     
     function updateDateTime() {
@@ -152,18 +187,16 @@
       const today = new Date();
       
       // Hari Jadian: 12 Mei 2024
-      const anniversary1 = new Date(2024, 4, 12); // Bulan dimulai dari 0 (Januari=0)
+      const anniversary1 = new Date(2024, 4, 12);
       const diff1 = today - anniversary1;
       const days1 = Math.floor(diff1 / (1000 * 60 * 60 * 24));
       
-      // Hitung tahun, bulan, dan hari untuk hari jadian
       let years1 = today.getFullYear() - anniversary1.getFullYear();
       let months1 = today.getMonth() - anniversary1.getMonth();
       let daysDiff1 = today.getDate() - anniversary1.getDate();
       
       if (daysDiff1 < 0) {
         months1--;
-        // Hitung hari di bulan sebelumnya
         const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
         daysDiff1 += lastMonth.getDate();
       }
@@ -178,14 +211,12 @@
       const diff2 = today - anniversary2;
       const days2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
       
-      // Hitung tahun, bulan, dan hari untuk hari pertemuan
       let years2 = today.getFullYear() - anniversary2.getFullYear();
       let months2 = today.getMonth() - anniversary2.getMonth();
       let daysDiff2 = today.getDate() - anniversary2.getDate();
       
       if (daysDiff2 < 0) {
         months2--;
-        // Hitung hari di bulan sebelumnya
         const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
         daysDiff2 += lastMonth.getDate();
       }
@@ -195,7 +226,6 @@
         months2 += 12;
       }
       
-      // Tampilkan hasil perhitungan
       document.getElementById("daysTogether1").innerHTML = `
         <strong>${days1} hari</strong> telah berlalu sejak hari itu<br>
         Atau tepatnya: <strong>${years1} tahun, ${months1} bulan, ${daysDiff1} hari</strong>
@@ -205,6 +235,18 @@
         <strong>${days2} hari</strong> telah berlalu sejak hari itu<br>
         Atau tepatnya: <strong>${years2} tahun, ${months2} bulan, ${daysDiff2} hari</strong>
       `;
+    }
+
+    function toggleMusic() {
+      const toggleBtn = document.getElementById("musicToggle");
+      if (isMusicPlaying) {
+        bgMusic.pause();
+        toggleBtn.textContent = "Nyalakan";
+      } else {
+        bgMusic.play();
+        toggleBtn.textContent = "Matikan";
+      }
+      isMusicPlaying = !isMusicPlaying;
     }
   </script>
 </body>
