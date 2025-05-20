@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kartu Ucapan Romantis</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to right, #ffd1dc, #ffe6f0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #loginPage, #greetingPage {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      text-align: center;
+      display: none;
+    }
+
+    #loginPage {
+      display: block;
+    }
+
+    h1 {
+      color: #ff69b4;
+    }
+
+    input {
+      padding: 10px;
+      margin-top: 15px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .present {
+      margin-top: 30px;
+      font-size: 60px;
+    }
+
+    .date-info {
+      margin: 20px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .anniversary-info {
+      background-color: #fff0f5;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      border: 1px dashed #ff69b4;
+    }
+
+    .message {
+      font-size: 18px;
+      color: #ff69b4;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Page -->
+  <div id="loginPage">
+    <h1>💖 Kartu Ucapan Cinta 💖</h1>
+    <p>Masukkan Namamu:</p>
+    <input type="text" id="nameInput" placeholder="Contoh: orang" />
+    <br />
+    <button onclick="showGreeting()">Buka Ucapan</button>
+  </div>
+
+  <!-- Greeting Page -->
+  <div id="greetingPage">
+    <div class="present">🎁</div>
+    <h1>Untuk <span id="nameDisplay"></span>,</h1>
+    
+    <div class="message">
+      Semoga hari-harimu selalu dipenuhi cinta, tawa, dan pelukan hangat.<br>
+      Kamu begitu berharga, dan aku bersyukur kamu ada di dunia ini 💕
+    </div>
+    
+    <div class="present">💌</div>
+    
+    <div class="date-info">
+      <div id="currentDateTime"></div>
+    </div>
+    
+    <div class="anniversary-info">
+      <h3 style="color: #ff69b4; margin-top: 0;">💑 Hari Jadian (12 Mei 2024)</h3>
+      <div id="daysTogether1"></div>
+    </div>
+    
+    <div class="anniversary-info">
+      <h3 style="color: #ff69b4; margin-top: 0;">💞 Hari Pertemuan (6 Maret 2024)</h3>
+      <div id="daysTogether2"></div>
+    </div>
+  </div>
+
+  <script>
+    function showGreeting() {
+      const name = document.getElementById("nameInput").value;
+      if (name.trim() === "") {
+        alert("Tolong masukkan namamu dulu ya 😅");
+        return;
+      }
+
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("greetingPage").style.display = "block";
+      document.getElementById("nameDisplay").textContent = name;
+      
+      // Update date and time
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+      
+      // Calculate anniversary days
+      calculateAnniversaryDays();
+    }
+    
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      document.getElementById("currentDateTime").textContent = now.toLocaleDateString('id-ID', options);
+    }
+    
+    function calculateAnniversaryDays() {
+      const today = new Date();
+      
+      // Hari Jadian: 12 Mei 2024
+      const anniversary1 = new Date(2024, 4, 12); // Bulan dimulai dari 0 (Januari=0)
+      const diff1 = today - anniversary1;
+      const days1 = Math.floor(diff1 / (1000 * 60 * 60 * 24));
+      
+      // Hitung tahun, bulan, dan hari untuk hari jadian
+      let years1 = today.getFullYear() - anniversary1.getFullYear();
+      let months1 = today.getMonth() - anniversary1.getMonth();
+      let daysDiff1 = today.getDate() - anniversary1.getDate();
+      
+      if (daysDiff1 < 0) {
+        months1--;
+        // Hitung hari di bulan sebelumnya
+        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        daysDiff1 += lastMonth.getDate();
+      }
+      
+      if (months1 < 0) {
+        years1--;
+        months1 += 12;
+      }
+      
+      // Hari Pertemuan: 6 Maret 2024
+      const anniversary2 = new Date(2024, 2, 6);
+      const diff2 = today - anniversary2;
+      const days2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
+      
+      // Hitung tahun, bulan, dan hari untuk hari pertemuan
+      let years2 = today.getFullYear() - anniversary2.getFullYear();
+      let months2 = today.getMonth() - anniversary2.getMonth();
+      let daysDiff2 = today.getDate() - anniversary2.getDate();
+      
+      if (daysDiff2 < 0) {
+        months2--;
+        // Hitung hari di bulan sebelumnya
+        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        daysDiff2 += lastMonth.getDate();
+      }
+      
+      if (months2 < 0) {
+        years2--;
+        months2 += 12;
+      }
+      
+      // Tampilkan hasil perhitungan
+      document.getElementById("daysTogether1").innerHTML = `
+        <strong>${days1} hari</strong> telah berlalu sejak hari itu<br>
+        Atau tepatnya: <strong>${years1} tahun, ${months1} bulan, ${daysDiff1} hari</strong>
+      `;
+      
+      document.getElementById("daysTogether2").innerHTML = `
+        <strong>${days2} hari</strong> telah berlalu sejak hari itu<br>
+        Atau tepatnya: <strong>${years2} tahun, ${months2} bulan, ${daysDiff2} hari</strong>
+      `;
+    }
+  </script>
+</body>
+</html>
