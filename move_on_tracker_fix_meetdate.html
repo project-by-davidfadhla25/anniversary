@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Move On Tracker</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 24px;
+      background-color: #fffafa;
+      color: #333;
+    }
+    .moveon-section {
+      max-width: 600px;
+      margin: auto;
+    }
+    .reminder-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .card {
+      background-color: #fff0f5;
+      border-left: 5px solid #ff5e78;
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+<div class="moveon-section">
+  <h2 style="color: #ff5e78;">💔 Move On Tracker</h2>
+  <p>📅 Hari Ketemuan: <strong>6 Maret 2024</strong></p>
+  <p id="daysSinceMeet"></p>
+
+  <p>📅 Hari Jadian: <strong>12 Mei 2024</strong></p>
+  <p id="daysSinceAnniversary"></p>
+
+  <p>🔡 Hari Putus: <strong>1 Juli 2025</strong></p>
+  <p id="daysSinceBreakup"></p>
+  <p id="motivationalMessage"></p>
+
+  <div class="reminder-cards">
+    <h3 style="margin-top: 30px;">🗓️ Pengingat Move On Bulanan</h3>
+    <div class="card">1 Agustus 2025 — 🌱 "Sudah sebulan sejak kamu melepaskan. Lihat sejauh mana kamu bertahan dengan tenang."</div>
+    <div class="card">1 September 2025 — ☄ "Dua bulan sudah. Rindu itu ada, tapi kamu gak patah."</div>
+    <div class="card">1 Oktober 2025 — 💪 "Tiga bulan dan kamu masih berdiri. Sadar gak, kamu makin dewasa?"</div>
+    <div class="card">1 November 2025 — ✨ "Empat bulan berlalu... Hatimu mulai bersih dari sesal."</div>
+    <div class="card">1 Desember 2025 — 🔥 "Lima bulan bukan waktu sebentar. Tapi kamu gak cari pengganti. Kamu memperbaiki diri."</div>
+    <div class="card">1 Januari 2026 — 🎉 "Awal tahun baru tanpa dia. Tapi kali ini kamu tahu: kamu cukup."</div>
+    <div class="card">1 Februari 2026 — 💖 "Tujuh bulan. Sekarang kamu bukan luka, kamu pelajaran."</div>
+    <div class="card">1 Maret 2026 — 🌈 "Delapan bulan, dan kamu masih kamu. Tapi lebih kuat."</div>
+    <div class="card">1 April 2026 — 📜 "Sembilan bulan = waktu lahir. Dan kamu lahir lagi jadi pribadi baru."</div>
+    <div class="card">1 Mei 2026 — ☕ "Sepuluh bulan. Kamu bisa tersenyum saat menyebut namanya... tanpa sakit."</div>
+    <div class="card">1 Juni 2026 — 🍃 "Sebelas bulan = nyaris setahun. Kamu sudah mengerti makna ikhlas."</div>
+    <div class="card">1 Juli 2026 — 💼 "Setahun sejak perpisahan. Tapi kamu gak hilang... kamu berkembang."</div>
+  </div>
+</div>
+
+<script>
+  const today = new Date();
+  const meetDate = new Date(2024, 2, 6);
+  const anniversaryDate = new Date(2024, 4, 12);
+  const breakupDate = new Date(2025, 6, 1);
+
+  function formatDuration(days) {
+    const years = Math.floor(days / 365);
+    const months = Math.floor((days % 365) / 30);
+    const remainingDays = days - (years * 365 + months * 30);
+    let result = "";
+    if (years > 0) result += `${years} tahun `;
+    if (months > 0) result += `${months} bulan `;
+    result += `${remainingDays} hari`;
+    return result;
+  }
+
+  const daysSinceMeet = Math.floor((today - meetDate) / (1000 * 60 * 60 * 24));
+  const daysSinceAnniversary = Math.floor((today - anniversaryDate) / (1000 * 60 * 60 * 24));
+  const daysSinceBreakup = Math.floor((today - breakupDate) / (1000 * 60 * 60 * 24));
+
+  document.getElementById("daysSinceMeet").innerHTML =
+    `Hari ini adalah <strong>hari ke-${daysSinceMeet}</strong> sejak pertama kali kamu ketemu dia (${formatDuration(daysSinceMeet)}).`;
+
+  document.getElementById("daysSinceAnniversary").innerHTML =
+    `Hari ini adalah <strong>hari ke-${daysSinceAnniversary}</strong> sejak jadian (${formatDuration(daysSinceAnniversary)}). Kenangan itu tetap berharga 💝`;
+
+  document.getElementById("daysSinceBreakup").innerHTML =
+    `Hari ini adalah <strong>hari ke-${daysSinceBreakup}</strong> sejak kamu belajar melepaskan (${formatDuration(daysSinceBreakup)}).`;
+
+  let message = "";
+  if (daysSinceBreakup <= 7) {
+    message = "💬 Baru banget... tapi kamu kuat.";
+  } else if (daysSinceBreakup <= 30) {
+    message = "💬 Kadang rindu, tapi kamu jalan terus.";
+  } else if (daysSinceBreakup <= 100) {
+    message = "💬 Kamu mulai tenang. Yang lalu cukup jadi kenangan.";
+  } else {
+    message = "💬 Kamu udah gak nunggu, kamu udah tumbuh. Bangga!";
+  }
+
+  document.getElementById("motivationalMessage").innerHTML = message;
+</script>
+</body>
+</html>
